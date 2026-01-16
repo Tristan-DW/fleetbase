@@ -7,7 +7,7 @@ services:
     volumes:
       - redis_data:/data
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,7 +24,7 @@ services:
       MYSQL_PASSWORD: "fleetbase123"
       MYSQL_ROOT_PASSWORD: "root123"
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent" ]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -44,7 +44,7 @@ services:
   scheduler:
     image: fleetbase/fleetbase-api:latest
     restart: unless-stopped
-    command: ["go-crond", "--verbose", "root:./crontab"]
+    command: [ "go-crond", "--verbose", "root:./crontab" ]
     volumes:
       - ./api/.env:/fleetbase/api/.env:ro
       - api_storage:/fleetbase/api/storage
@@ -57,7 +57,7 @@ services:
   queue:
     image: fleetbase/fleetbase-api:latest
     restart: unless-stopped
-    command: ["php", "artisan", "queue:work", "--tries=3", "--timeout=120"]
+    command: [ "php", "artisan", "queue:work", "--tries=3", "--timeout=120" ]
     volumes:
       - ./api/.env:/fleetbase/api/.env:ro
       - api_storage:/fleetbase/api/storage
@@ -113,12 +113,12 @@ services:
       - |
         cat > /usr/share/nginx/html/fleetbase.config.json <<EOF
         {
-          "API_HOST": "${API_HOST}",
-          "SOCKETCLUSTER_HOST": "${SOCKETCLUSTER_HOST}",
-          "SOCKETCLUSTER_PORT": ${SOCKETCLUSTER_PORT},
-          "SOCKETCLUSTER_PATH": "${SOCKETCLUSTER_PATH}",
-          "IS_SECURE": ${IS_SECURE},
-          "APP_NAME": "${APP_NAME}"
+          "API_HOST": "$${API_HOST}",
+          "SOCKETCLUSTER_HOST": "$${SOCKETCLUSTER_HOST}",
+          "SOCKETCLUSTER_PORT": $${SOCKETCLUSTER_PORT},
+          "SOCKETCLUSTER_PATH": "$${SOCKETCLUSTER_PATH}",
+          "IS_SECURE": $${IS_SECURE},
+          "APP_NAME": "$${APP_NAME}"
         }
         EOF
         exec nginx -g "daemon off;"
