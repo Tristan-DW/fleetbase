@@ -15,11 +15,6 @@ services:
   database:
     image: mysql:8.0-oracle
     restart: unless-stopped
-
-    # Do NOT expose MySQL publicly on a VPS (even for testing)
-    # ports:
-    #   - "3306:3306"
-
     volumes:
       - "./docker/database/:/docker-entrypoint-initdb.d/"
       - mysql_data:/var/lib/mysql
@@ -50,14 +45,8 @@ services:
     image: fleetbase/fleetbase-api:latest
     restart: unless-stopped
     command: ["go-crond", "--verbose", "root:./crontab"]
-    environment:
-      DATABASE_URL: "mysql://fleetbase:fleetbase123@database:3306/fleetbase"
-      QUEUE_CONNECTION: redis
-      CACHE_DRIVER: redis
-      CACHE_PATH: /fleetbase/api/storage/framework/cache
-      CACHE_URL: "redis://cache:6379"
-      REDIS_URL: "redis://cache:6379"
     volumes:
+      - ./api/.env:/fleetbase/api/.env:ro
       - api_storage:/fleetbase/api/storage
     depends_on:
       database:
@@ -69,14 +58,8 @@ services:
     image: fleetbase/fleetbase-api:latest
     restart: unless-stopped
     command: ["php", "artisan", "queue:work", "--tries=3", "--timeout=120"]
-    environment:
-      DATABASE_URL: "mysql://fleetbase:fleetbase123@database:3306/fleetbase"
-      QUEUE_CONNECTION: redis
-      CACHE_DRIVER: redis
-      CACHE_PATH: /fleetbase/api/storage/framework/cache
-      CACHE_URL: "redis://cache:6379"
-      REDIS_URL: "redis://cache:6379"
     volumes:
+      - ./api/.env:/fleetbase/api/.env:ro
       - api_storage:/fleetbase/api/storage
     depends_on:
       database:
@@ -88,38 +71,9 @@ services:
     image: fleetbase/fleetbase-api:latest
     restart: unless-stopped
     volumes:
+      # IMPORTANT: this must exist as a FILE on the host
+      - ./api/.env:/fleetbase/api/.env:ro
       - api_storage:/fleetbase/api/storage
-    environment:
-      ENVIRONMENT: production
-      APP_ENV: production
-      APP_DEBUG: "false"
-
-      # Laravel/Fleetbase needs an APP_KEY - this avoids common boot failures
-      APP_KEY: "base64:ZmFrZS1rZXktZm9yLXRlc3Rpbmctb25seS0xMjM0NTY3ODkwMTIzNDU2"
-
-      APP_URL: "http://46.202.175.218:8000"
-      CONSOLE_HOST: "http://46.202.175.218:4200"
-
-      # IP hosting: do NOT set cookies to an IP domain
-      SESSION_DOMAIN: ""
-
-      DATABASE_URL: "mysql://fleetbase:fleetbase123@database:3306/fleetbase"
-
-      QUEUE_CONNECTION: redis
-      CACHE_DRIVER: redis
-      CACHE_PATH: /fleetbase/api/storage/framework/cache
-      CACHE_URL: "redis://cache:6379"
-      REDIS_URL: "redis://cache:6379"
-
-      BROADCAST_DRIVER: socketcluster
-
-      MAIL_FROM_NAME: Fleetbase
-      APP_NAME: Fleetbase
-      LOG_CHANNEL: daily
-
-      REGISTRY_HOST: https://registry.fleetbase.io
-      REGISTRY_PREINSTALLED_EXTENSIONS: "true"
-      OSRM_HOST: https://router.project-osrm.org
     depends_on:
       database:
         condition: service_healthy
@@ -140,24 +94,31 @@ services:
     depends_on:
       - application
 
-  # FIXED: no bind-mount fleetbase.config.json (prevents your mount error)
-  # Writes config inside container then starts nginx.
+  # No bind-mount -> avoids your "file vs directory" mount failure.
   console:
     image: fleetbase/fleetbase-console:latest
     restart: unless-stopped
     ports:
       - "4200:4200"
     environment:
-      FLEETBASE_API: "http://46.202.175.218:8000"
-      FLEETBASE_SOCKET: "ws://46.202.175.218:38000"
+      API_HOST: "http://46.202.175.218:8000"
+      SOCKETCLUSTER_HOST: "http://46.202.175.218"
+      SOCKETCLUSTER_PORT: "38000"
+      SOCKETCLUSTER_PATH: "/"
+      IS_SECURE: "false"
+      APP_NAME: "Fleetbase"
     command:
       - /bin/sh
       - -lc
       - |
         cat > /usr/share/nginx/html/fleetbase.config.json <<EOF
         {
-          "api": "${FLEETBASE_API}",
-          "socket": "${FLEETBASE_SOCKET}"
+          "API_HOST": "${API_HOST}",
+          "SOCKETCLUSTER_HOST": "${SOCKETCLUSTER_HOST}",
+          "SOCKETCLUSTER_PORT": ${SOCKETCLUSTER_PORT},
+          "SOCKETCLUSTER_PATH": "${SOCKETCLUSTER_PATH}",
+          "IS_SECURE": ${IS_SECURE},
+          "APP_NAME": "${APP_NAME}"
         }
         EOF
         exec nginx -g "daemon off;"
