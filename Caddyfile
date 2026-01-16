@@ -1,15 +1,17 @@
 {
-	frankenphp {
-		num_threads 24
-	}
-	order php_server before file_server
+	email internal
 }
 
-http://:8000 {
-	root * /fleetbase/api/public
-	encode zstd br gzip
-	
-	php_server {
-		resolve_root_symlink
-	}
+admin.skedadel.co {
+	# Proxy /v1/* requests to the API (httpd service)
+	reverse_proxy /v1/* httpd:80
+
+    # Proxy public storage to API (httpd service)
+    reverse_proxy /storage/* httpd:80
+
+	# Proxy /socketcluster/* requests to the SocketCluster service
+	reverse_proxy /socketcluster/* socket:8000
+
+	# Proxy everything else to the Console
+	reverse_proxy * console:4200
 }

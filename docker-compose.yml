@@ -33,13 +33,13 @@ services:
     image: socketcluster/socketcluster:v17.4.0
     platform: linux/amd64
     restart: unless-stopped
-    ports:
-      - "38000:8000"
+    # ports:
+    #   - "38000:8000"
     environment:
       SOCKETCLUSTER_WORKERS: 10
       SOCKETCLUSTER_BROKERS: 10
       SOCKETCLUSTER_OPTIONS: >-
-        {"origins":"http://46.202.175.218:*"}
+        {"origins":"https://admin.skedadel.co:*"}
 
   scheduler:
     image: fleetbase/fleetbase-api:latest
@@ -89,8 +89,8 @@ services:
       context: .
       dockerfile: docker/httpd/Dockerfile
     restart: unless-stopped
-    ports:
-      - "8000:80"
+    # ports:
+    #   - "8000:80"
     depends_on:
       - application
 
@@ -98,14 +98,14 @@ services:
   console:
     image: fleetbase/fleetbase-console:latest
     restart: unless-stopped
-    ports:
-      - "4200:4200"
+    # ports:
+    #   - "4200:4200"
     environment:
-      API_HOST: "http://46.202.175.218:8000"
-      SOCKETCLUSTER_HOST: "http://46.202.175.218"
-      SOCKETCLUSTER_PORT: "38000"
-      SOCKETCLUSTER_PATH: "/"
-      IS_SECURE: "false"
+      API_HOST: "https://admin.skedadel.co/v1"
+      SOCKETCLUSTER_HOST: "admin.skedadel.co"
+      SOCKETCLUSTER_PORT: "443"
+      SOCKETCLUSTER_PATH: "/socketcluster"
+      IS_SECURE: "true"
       APP_NAME: "Fleetbase"
     command:
       - /bin/sh
@@ -126,7 +126,24 @@ services:
       - httpd
       - socket
 
+  caddy:
+    image: caddy:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - console
+      - httpd
+      - socket
+
 volumes:
   mysql_data:
   redis_data:
   api_storage:
+  caddy_data:
+  caddy_config:
