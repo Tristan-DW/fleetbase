@@ -7,7 +7,7 @@ services:
     volumes:
       - redis_data:/data
     healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
+      test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,7 +24,7 @@ services:
       MYSQL_PASSWORD: "fleetbase123"
       MYSQL_ROOT_PASSWORD: "root123"
     healthcheck:
-      test: [ "CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent" ]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -33,21 +33,38 @@ services:
     image: socketcluster/socketcluster:v17.4.0
     platform: linux/amd64
     restart: unless-stopped
-    # ports:
-    #   - "38000:8000"
+    ports:
+      - "127.0.0.1:38000:8000"
     environment:
       SOCKETCLUSTER_WORKERS: 10
       SOCKETCLUSTER_BROKERS: 10
       SOCKETCLUSTER_OPTIONS: >-
-        {"origins":"https://skedadel.media-zoo.co.za:*"}
+        {"origins":"https://skedadel.media-zoo.co.za:*","allowAllOrigins":false}
 
   scheduler:
     image: fleetbase/fleetbase-api:latest
     restart: unless-stopped
-    command: [ "go-crond", "--verbose", "root:./crontab" ]
+    command: ["go-crond", "--verbose", "root:./crontab"]
     volumes:
-      - ./api/.env:/fleetbase/api/.env:ro
       - api_storage:/fleetbase/api/storage
+    environment:
+      APP_ENV: "production"
+      APP_DEBUG: "false"
+      APP_URL: "https://skedadel.media-zoo.co.za"
+      APP_KEY: "base64:vOVdyZxu1vgP2oPiaJSUdxKE2m42J6S2s4o1BbnGw0k="
+
+      DB_CONNECTION: "mysql"
+      DB_HOST: "database"
+      DB_PORT: "3306"
+      DB_DATABASE: "fleetbase"
+      DB_USERNAME: "fleetbase"
+      DB_PASSWORD: "fleetbase123"
+
+      CACHE_DRIVER: "redis"
+      REDIS_HOST: "cache"
+      REDIS_PORT: "6379"
+
+      QUEUE_CONNECTION: "redis"
     depends_on:
       database:
         condition: service_healthy
@@ -57,10 +74,27 @@ services:
   queue:
     image: fleetbase/fleetbase-api:latest
     restart: unless-stopped
-    command: [ "php", "artisan", "queue:work", "--tries=3", "--timeout=120" ]
+    command: ["php", "artisan", "queue:work", "--tries=3", "--timeout=120"]
     volumes:
-      - ./api/.env:/fleetbase/api/.env:ro
       - api_storage:/fleetbase/api/storage
+    environment:
+      APP_ENV: "production"
+      APP_DEBUG: "false"
+      APP_URL: "https://skedadel.media-zoo.co.za"
+      APP_KEY: "base64:vOVdyZxu1vgP2oPiaJSUdxKE2m42J6S2s4o1BbnGw0k="
+
+      DB_CONNECTION: "mysql"
+      DB_HOST: "database"
+      DB_PORT: "3306"
+      DB_DATABASE: "fleetbase"
+      DB_USERNAME: "fleetbase"
+      DB_PASSWORD: "fleetbase123"
+
+      CACHE_DRIVER: "redis"
+      REDIS_HOST: "cache"
+      REDIS_PORT: "6379"
+
+      QUEUE_CONNECTION: "redis"
     depends_on:
       database:
         condition: service_healthy
@@ -71,9 +105,25 @@ services:
     image: fleetbase/fleetbase-api:latest
     restart: unless-stopped
     volumes:
-      # IMPORTANT: this must exist as a FILE on the host
-      - ./api/.env:/fleetbase/api/.env:ro
       - api_storage:/fleetbase/api/storage
+    environment:
+      APP_ENV: "production"
+      APP_DEBUG: "false"
+      APP_URL: "https://skedadel.media-zoo.co.za"
+      APP_KEY: "base64:vOVdyZxu1vgP2oPiaJSUdxKE2m42J6S2s4o1BbnGw0k="
+
+      DB_CONNECTION: "mysql"
+      DB_HOST: "database"
+      DB_PORT: "3306"
+      DB_DATABASE: "fleetbase"
+      DB_USERNAME: "fleetbase"
+      DB_PASSWORD: "fleetbase123"
+
+      CACHE_DRIVER: "redis"
+      REDIS_HOST: "cache"
+      REDIS_PORT: "6379"
+
+      QUEUE_CONNECTION: "redis"
     depends_on:
       database:
         condition: service_healthy
@@ -89,17 +139,16 @@ services:
       context: .
       dockerfile: docker/httpd/Dockerfile
     restart: unless-stopped
-    # ports:
-    #   - "8000:80"
+    ports:
+      - "127.0.0.1:8001:80"
     depends_on:
       - application
 
-  # No bind-mount -> avoids your "file vs directory" mount failure.
   console:
     image: fleetbase/fleetbase-console:latest
     restart: unless-stopped
-    # ports:
-    #   - "4200:4200"
+    ports:
+      - "127.0.0.1:4200:4200"
     environment:
       API_HOST: "https://skedadel.media-zoo.co.za/v1"
       SOCKETCLUSTER_HOST: "skedadel.media-zoo.co.za"
@@ -126,24 +175,7 @@ services:
       - httpd
       - socket
 
-  caddy:
-    image: caddy:alpine
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - console
-      - httpd
-      - socket
-
 volumes:
   mysql_data:
   redis_data:
   api_storage:
-  caddy_data:
-  caddy_config:
