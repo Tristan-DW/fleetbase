@@ -39,7 +39,7 @@ services:
       SOCKETCLUSTER_WORKERS: 10
       SOCKETCLUSTER_BROKERS: 10
       SOCKETCLUSTER_OPTIONS: >-
-        {"origins":"https://admin.skedadel.co:*"}
+        {"origins":"https://skedadel.media-zoo.co.za:*"}
 
   scheduler:
     image: fleetbase/fleetbase-api:latest
@@ -101,7 +101,7 @@ services:
     # ports:
     #   - "4200:4200"
     environment:
-      API_HOST: "https://admin.skedadel.co/v1"
+      API_HOST: "https://skedadel.media-zoo.co.za/v1"
       SOCKETCLUSTER_HOST: "admin.skedadel.co"
       SOCKETCLUSTER_PORT: "443"
       SOCKETCLUSTER_PATH: "/socketcluster"
