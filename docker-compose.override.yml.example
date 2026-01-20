@@ -5,21 +5,21 @@ version: "3.8"
 services:
   application:
     environment:
-      CONSOLE_HOST: http://localhost:4200
+      CONSOLE_HOST: http://skedadel.media-zoo.co.za
       # Add your environment-specific variables here
       MAIL_MAILER: smtp  # or ses, mailgun, postmark, sendgrid
       OSRM_HOST: https://router.project-osrm.org
       # IPINFO_API_KEY: your_api_key
-      # GOOGLE_MAPS_API_KEY: your_api_key
+      # GOOGLE_MAPS_API_KEY: AIzaSyCri5TmJCL4DNjYKzSpQyHuM4KRXn_BasQ
       # GOOGLE_MAPS_LOCALE: us
-      # TWILIO_SID: your_twilio_sid
-      # TWILIO_TOKEN: your_twilio_token
-      # TWILIO_FROM: your_twilio_phone
+      # TWILIO_SID: AC7e643d57b384e1d299f65d873571b50e
+      # TWILIO_TOKEN: 45fd545015639dda8d4c5e69f473f82a
+      # TWILIO_FROM: +14407717690
 
   socket:
     environment:
       # DEVELOPMENT: Allow localhost connections (HTTP, HTTPS, and WebSocket protocols)
-      SOCKETCLUSTER_OPTIONS: '{"origins":"http://localhost:*,https://localhost:*,ws://localhost:*,wss://localhost:*"}'
+      SOCKETCLUSTER_OPTIONS: '{"origins":"http://skedadel.media-zoo.co.za:*,https://skedadel.media-zoo.co.za:*,ws://skedadel.media-zoo.co.za:*,wss://skedadel.media-zoo.co.za:*"}'
       
       # PRODUCTION: Replace with your actual domain(s) - include all protocols
-      # SOCKETCLUSTER_OPTIONS: '{"origins":"https://yourdomain.com:*,wss://yourdomain.com:*,https://app.yourdomain.com:*,wss://app.yourdomain.com:*"}'
+      # SOCKETCLUSTER_OPTIONS: '{"origins":"https://skedadel.media-zoo.co.za:*,wss://skedadel.media-zoo.co.za:*,https://app.skedadel.media-zoo.co.za:*,wss://app.skedadel.media-zoo.co.za:*"}'
