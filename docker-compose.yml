@@ -3,7 +3,7 @@ services:
     image: redis:4-alpine
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -20,7 +20,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: "fleetbase"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -34,13 +34,11 @@ services:
     environment:
       SOCKETCLUSTER_WORKERS: 10
       SOCKETCLUSTER_BROKERS: 10
-      # SOCKETCLUSTER_OPTIONS can be set via docker-compose.override.yml for specific environments
-      # For production, use: SOCKETCLUSTER_OPTIONS: '{"origins":"https://yourdomain.com:*"}'
-      # For development, use: SOCKETCLUSTER_OPTIONS: '{"origins":"http://localhost:*"}'
+      SOCKETCLUSTER_OPTIONS: '{"origins":"http://localhost:*,https://localhost:*,ws://localhost:*,wss://localhost:*,https://console.skedadel.co:*"}'
 
   scheduler:
     image: fleetbase/fleetbase-api:latest
-    command: ["go-crond", "--verbose", "root:./crontab"]
+    command: [ "go-crond", "--verbose", "root:./crontab" ]
     restart: unless-stopped
     environment:
       DATABASE_URL: "mysql://root@database/fleetbase"
@@ -55,10 +53,10 @@ services:
 
   queue:
     image: fleetbase/fleetbase-api:latest
-    command: ["php", "artisan", "queue:work"]
+    command: [ "php", "artisan", "queue:work" ]
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "php", "artisan", "queue:status"]
+      test: [ "CMD", "php", "artisan", "queue:status" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -70,11 +68,13 @@ services:
       CACHE_URL: tcp://cache
       REDIS_URL: tcp://cache
     depends_on:
-        - database
-        - cache
+      - database
+      - cache
 
   console:
-    image: fleetbase/fleetbase-console:latest
+    build:
+      context: ./console
+      dockerfile: Dockerfile
     ports:
       - "4200:4200"
     volumes:
@@ -94,12 +94,23 @@ services:
       REDIS_URL: tcp://cache
       SESSION_DOMAIN: localhost
       BROADCAST_DRIVER: socketcluster
-      MAIL_FROM_NAME: Fleetbase
+      MAIL_FROM_NAME: Skedadel
       APP_NAME: Fleetbase
       LOG_CHANNEL: daily
       REGISTRY_HOST: https://registry.fleetbase.io
       REGISTRY_PREINSTALLED_EXTENSIONS: 'true'
       OSRM_HOST: https://router.project-osrm.org
+      CONSOLE_HOST: https://console.skedadel.co
+      MAIL_MAILER: smtp
+      MAIL_HOST: smtp.hostinger.com
+      MAIL_PORT: 465
+      MAIL_ENCRYPTION: ssl
+      MAIL_USERNAME: skedadel@uxbomb.com
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      MAIL_FROM_ADDRESS: skedadel@uxbomb.com
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY}
+      TWILIO_SID: ${TWILIO_SID}
+      TWILIO_TOKEN: ${TWILIO_TOKEN}
     depends_on:
       - database
       - cache
