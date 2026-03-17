@@ -1,11 +1,29 @@
 <div align="center">
 
+<img src="https://skillicons.dev/icons?i=github" />
+
+<br/>
+
+![GitHub last commit](https://img.shields.io/github/last-commit/Tristan-DW/fleetbase?style=for-the-badge&color=6e40c9)
+![GitHub stars](https://img.shields.io/github/stars/Tristan-DW/fleetbase?style=for-the-badge&color=f0883e)
+![GitHub issues](https://img.shields.io/github/issues/Tristan-DW/fleetbase?style=for-the-badge&color=da3633)
+![License](https://img.shields.io/badge/license-MIT-238636?style=for-the-badge)
+
+# fleetbase
+
+> **Modular logistics and supply chain operating system (LSOS)**
+
+</div>
+
+---
+
+<div align="center">
+
 ![GitHub last commit](https://img.shields.io/github/last-commit/Tristan-DW/fleetbase?style=for-the-badge)
 ![GitHub stars](https://img.shields.io/github/stars/Tristan-DW/fleetbase?style=for-the-badge)
 ![GitHub issues](https://img.shields.io/github/issues/Tristan-DW/fleetbase?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
 
-# fleetbase
 
 > **Modular logistics and supply chain operating system (LSOS)**
 
@@ -48,7 +66,7 @@ Fleetbase is a modular logistics and supply chain operating system designed to s
   <img src="https://flb-assets.s3.ap-southeast-1.amazonaws.com/static/fleetbase_overview.png" alt="Fleetbase Console" width="1200" style="max-width: 100%;" />
 </p>
 
-## 🎯 Who Is Fleetbase For?
+##  Who Is Fleetbase For?
 
 Fleetbase is designed for organizations that need powerful logistics and supply chain management:
 
@@ -76,7 +94,7 @@ git clone git@github.com:fleetbase/fleetbase.git
 cd fleetbase && ./scripts/docker-install.sh
 ```
 
-## 📖 Table of contents
+##  Table of contents
 
   - [Features](#-features)
   - [Install](#-install)
@@ -91,26 +109,26 @@ cd fleetbase && ./scripts/docker-install.sh
   - [Creators](#creators)
   - [License & Copyright](#license--copyright)
 
-## 📦 Features
+##  Features
 
 | Feature | Description |
 |---------|-------------|
-| 🔌 **Extensible** | Build installable extensions and additional functionality directly into the OS via modular architecture. |
-| 👨‍💻 **Developer Friendly** | RESTful API, socket, and webhooks to seamlessly integrate with external systems or develop custom applications. |
-| 📱 **Native Apps** | Collection of open-source and native apps designed for operations and customer facing. |
-| 🤝 **Collaboration** | Dedicated chat and comments system for collaboration across your organization. |
-| 🔒 **Security** | Secure data encryption, adherence to industry-standard security practices, and a comprehensive dynamic Identity and Access Management (IAM) system. |
-| 📡 **Telematics** | Integrate and connect to hardware devices and sensors to provide more feedback and visibility into operations. |
-| 🌐 **Internationalized** | Translate into multiple languages to accommodate diverse user bases and global operations. |
-| ⚙️ **Framework** | PHP core built around logistics and supply chain abstractions to streamline extension development. |
-| 🔄 **Dynamic** | Configurable rules, flows and logic to enable automation and customization. |
-| 🎨 **UI/UX** | Clean, responsive user-friendly interface for efficient management and operations from desktop or mobile. |
-| 📊 **Dashboards** | Create custom dashboards and widgets to get full visibility into operations. |
-| 📈 **Scalability** | Uninterrupted growth with scalable infrastructure and design, capable of handling increasing data volume and user demand as your business expands. |
-| 🔄 **Continuous Improvements** | Commitment to continuous improvement, providing regular updates that seamlessly introduce optimizations, new features, and overall enhancements to the OS. |
-| 🌍 **Open Source** | Deploy it either on-premise or in the cloud according to your organization's needs and preferences. |
+|  **Extensible** | Build installable extensions and additional functionality directly into the OS via modular architecture. |
+| ‍ **Developer Friendly** | RESTful API, socket, and webhooks to seamlessly integrate with external systems or develop custom applications. |
+|  **Native Apps** | Collection of open-source and native apps designed for operations and customer facing. |
+|  **Collaboration** | Dedicated chat and comments system for collaboration across your organization. |
+|  **Security** | Secure data encryption, adherence to industry-standard security practices, and a comprehensive dynamic Identity and Access Management (IAM) system. |
+|  **Telematics** | Integrate and connect to hardware devices and sensors to provide more feedback and visibility into operations. |
+|  **Internationalized** | Translate into multiple languages to accommodate diverse user bases and global operations. |
+| ️ **Framework** | PHP core built around logistics and supply chain abstractions to streamline extension development. |
+|  **Dynamic** | Configurable rules, flows and logic to enable automation and customization. |
+|  **UI/UX** | Clean, responsive user-friendly interface for efficient management and operations from desktop or mobile. |
+|  **Dashboards** | Create custom dashboards and widgets to get full visibility into operations. |
+|  **Scalability** | Uninterrupted growth with scalable infrastructure and design, capable of handling increasing data volume and user demand as your business expands. |
+|  **Continuous Improvements** | Commitment to continuous improvement, providing regular updates that seamlessly introduce optimizations, new features, and overall enhancements to the OS. |
+|  **Open Source** | Deploy it either on-premise or in the cloud according to your organization's needs and preferences. |
 
-## 💾 Install
+##  Install
 Getting up and running with Fleetbase via Docker is the quickest and most straightforward way. If you'd like to use Fleetbase without docker read the [full install guide in the Fleetbase documentation](https://docs.fleetbase.io/getting-started/install).  
   
 Make sure you have both the latest versions of docker and docker-compose installed on your system.
@@ -179,7 +197,7 @@ You can find extensions available from the official [Fleetbase Console](https://
 
 Additionally you're able to develop and publish your own extensions as well which you can read more about developing extensions via the [extension building guide](https://docs.fleetbase.io/developers/building-an-extension).
 
-## ⌨️ Fleetbase CLI 
+## ️ Fleetbase CLI 
 
 The Fleetbase CLI is a powerful tool designed to simplify the management of extensions for your Fleetbase instance. With the CLI, you can effortlessly handle authentication, install and uninstall extensions, and scaffold new extensions if you are developing your own.
 
@@ -191,7 +209,7 @@ npm i -g @fleetbase/cli
 
 Once installed, you can access a variety of commands to manage your Fleetbase extensions.
 
-# 📱 Apps
+#  Apps
 
 Fleetbase offers open-source mobile apps that can be customized and deployed:
 
@@ -200,18 +218,18 @@ Fleetbase offers open-source mobile apps that can be customized and deployed:
 | **Storefront App** | E-commerce/on-demand app for launching your own shop or marketplace | iOS & Android | [GitHub](https://github.com/fleetbase/storefront-app) |
 | **Navigator App** | Driver app for managing orders with real-time location tracking | iOS & Android | [GitHub](https://github.com/fleetbase/navigator-app) |
 
-## 🛣️ Roadmap
+## ️ Roadmap
 
 | Feature | Status | Expected Release | Description |
 |---------|--------|------------------|-------------|
-| **Pallet (WMS)** | 🚧 In Development | Late Q1 / Early Q2 2026 | Inventory and Warehouse Management extension |
-| **Ledger** | 🚧 In Development | Late Q1 / Early Q2 2026 | Accounting and Invoicing extension |
-| **AI Agent** | 🔬 Research | Q4 2026 | AI integration for system and workflow automation |
-| **Dynamic Rules** | 📋 Planned | 2027 | Rule builder to trigger events, tasks, and jobs |
+| **Pallet (WMS)** |  In Development | Late Q1 / Early Q2 2026 | Inventory and Warehouse Management extension |
+| **Ledger** |  In Development | Late Q1 / Early Q2 2026 | Accounting and Invoicing extension |
+| **AI Agent** |  Research | Q4 2026 | AI integration for system and workflow automation |
+| **Dynamic Rules** |  Planned | 2027 | Rule builder to trigger events, tasks, and jobs |
 
 Want to influence our roadmap? [Join the discussion](https://github.com/orgs/fleetbase/discussions)
 
-## 🚀 Deployment Options
+##  Deployment Options
 
 | Option | Best For | Setup Time | Maintenance |
 |--------|----------|------------|-------------|
@@ -222,11 +240,11 @@ Want to influence our roadmap? [Join the discussion](https://github.com/orgs/fle
 
 [View detailed deployment guides →](https://docs.fleetbase.io/category/deploying)
 
-## 🐛 Bugs and 💡 Feature Requests
+##  Bugs and  Feature Requests
 
 Have a bug or a feature request? Please check the <a href="https://github.com/fleetbase/fleetbase/issues">issue tracker</a> and search for existing and closed issues. If your problem or idea is not addressed yet, please <a href="https://github.com/fleetbase/fleetbase/issues/new">open a new issue</a>.
 
-## 📄 Documentation
+##  Documentation
 
 Fleetbase has comprehensive documentation to help you get started and make the most of the platform:
 
@@ -235,7 +253,7 @@ Fleetbase has comprehensive documentation to help you get started and make the m
 - **Extension Development**: [Building Extensions](https://docs.fleetbase.io/developers/building-an-extension)
 - **Deployment**: [Deployment Guides](https://docs.fleetbase.io/deployment)
 
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions from the community! Here's how you can help:
 
@@ -247,7 +265,7 @@ We welcome contributions from the community! Here's how you can help:
 
 **Development Setup**: See our [Development Installation Guide](https://docs.fleetbase.io/getting-started/install/for-development) for detailed instructions on setting up your local development environment.
 
-## 👥 Community
+##  Community
 
 Get updates on Fleetbase's development and chat with the project maintainers and community members by joining our <a href="https://discord.gg/V7RVWRQ2Wm">Discord</a>.
 
@@ -312,10 +330,10 @@ For organizations that require more flexibility, Fleetbase offers a **Fleetbase 
 
 | License Type | Price | Support & Updates | Best For |
 |--------------|-------|-------------------|----------|
-| **Annual License** | $25,000/year | ✅ All upgrades & Business Support included | Organizations requiring continuous updates and support |
-| **Monthly License** | $2,500/month | ✅ All upgrades & Business Support included | Pilot projects and short-term deployments |
-| **Major Version License** | $25,000 (one-time) | ❌ No ongoing support | Stable deployments on a single major version |
-| **Minor Version License** | $15,000 (one-time) | ❌ No ongoing support | Locked version deployments |
+| **Annual License** | $25,000/year |  All upgrades & Business Support included | Organizations requiring continuous updates and support |
+| **Monthly License** | $2,500/month |  All upgrades & Business Support included | Pilot projects and short-term deployments |
+| **Major Version License** | $25,000 (one-time) |  No ongoing support | Stable deployments on a single major version |
+| **Minor Version License** | $15,000 (one-time) |  No ongoing support | Locked version deployments |
 
 ### When You Need a Commercial License
 
@@ -335,12 +353,20 @@ For more information about commercial licensing options, please contact us:
 
 ---
 
-**Copyright © 2026 Fleetbase Pte. Ltd.** All rights reserved.
+**Copyright  2026 Fleetbase Pte. Ltd.** All rights reserved.
 
 ---
 
 <div align="center">
 
 **Made with love by [Tristan Wentzel](https://github.com/Tristan-DW)**
+
+</div>
+
+---
+
+<div align="center">
+
+<sub>Built by <a href="https://github.com/Tristan-DW">Tristan Wentzel</a></sub>
 
 </div>
