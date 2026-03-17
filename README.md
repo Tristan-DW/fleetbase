@@ -1,3 +1,18 @@
+<div align="center">
+
+![GitHub last commit](https://img.shields.io/github/last-commit/Tristan-DW/fleetbase?style=for-the-badge)
+![GitHub stars](https://img.shields.io/github/stars/Tristan-DW/fleetbase?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues/Tristan-DW/fleetbase?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
+
+# fleetbase
+
+> **Modular logistics and supply chain operating system (LSOS)**
+
+</div>
+
+---
+
 <div id="hero">
   <p align="center" dir="auto">
       <a href="https://fleetbase.io" rel="nofollow">
@@ -157,7 +172,6 @@ services:
 
 You can learn more about full installation, and configuration in the [official documentation](https://docs.fleetbase.io/getting-started/install).
 
-# 🧩 Extensions 
 
 Extensions are modular components that enhance the functionality of your Fleetbase instance. They allow you to add new features, customize existing behavior, or integrate with external systems.
 
@@ -323,3 +337,10 @@ For more information about commercial licensing options, please contact us:
 
 **Copyright © 2026 Fleetbase Pte. Ltd.** All rights reserved.
 
+---
+
+<div align="center">
+
+**Made with love by [Tristan Wentzel](https://github.com/Tristan-DW)**
+
+</div>
